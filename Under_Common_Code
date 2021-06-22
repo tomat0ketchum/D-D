@@ -1,0 +1,69 @@
+Under_Common_Dictionary = {'a': 'aak', 'b': 'uh', 'c': 'k', 'd': 'dr', 'e': 'eh', 'f': 'fr', 'g': 'gew', 'h': 'ch',
+                           'i': 'ig', 'j': 'jow', 'k': 'kak', 'l': 'ill', 'm': 'am', 'n': 'oo', 'o': 'ock', 'p': 'pr',
+                           'q': 'Koo', 'r': 'rik', 's': 'sh', 't': 'ti', 'u': "yul", 'v': 'ike', 'w': 'wi', 'x': 'viz',
+                           'y': 'ite', 'z': 'zh', '.': ' &!', '?': '*', ',': ':', "'": "|"}
+
+
+# Function to encrypt the string
+# according to the morse code chart
+def encrypt_UCD(message):
+    cipher = ''
+    for letter in message:
+        if letter != ' ':
+
+            # Looks up the dictionary and adds the
+            # correspponding morse code
+            # along with a space to separate
+            # morse codes for different characters
+            cipher += Under_Common_Dictionary[letter] + ' '
+        else:
+            # 1 space indicates different characters
+            # and 4 indicates different words
+            cipher += '   '
+
+    return cipher
+
+
+# Function to decrypt the string
+# from morse to english
+def decrypt_UCD(message):
+    # extra space added at the end to access the
+    # last morse code
+    message += ' '
+
+    decipher = ''
+    citext = ''
+    for letter in message:
+
+        # checks for space
+        if (letter != ' '):
+
+            # counter to keep track of space
+            i = 0
+
+            # storing morse code of a single character
+            citext += letter
+
+        # in case of space
+        else:
+            # if i = 1 that indicates a new character
+            i += 1
+
+            # if i = 2 that indicates a new word
+            if i == 2:
+
+                # adding space to separate words
+                decipher += ' '
+            else:
+
+                # accessing the keys using their values (reverse of encryption)
+                decipher += list(Under_Common_Dictionary.keys())[list(Under_Common_Dictionary.values()).index(citext)]
+                citext = ''
+
+    return decipher
+
+
+# message = "aaktitiaakkkak ticheh uhaakrikrikaakkkaksh& illehaakikeeh ooock shyulrikikeigikeockriksh&"
+message = "attack the barracks. leave no survivors. we save our leader at all costs. victory or death"
+print(encrypt_UCD(message))
+# print(decrypt_UCD(message))
